@@ -10,9 +10,10 @@
     - enabled js
 5. Created a member var for the webview client.
     - set the webview to include the client
-6. set initial page
+6. set initial page to liquipedia
 7. added the internal and external urls 
 8. call the methods inside the dropdown menu
+9. Changed name of the alternatives in the dropdown menu
 
 ## Code 
 
@@ -25,7 +26,6 @@
 </resources>
 
 ```
-
 
 ### MainActivity
 
@@ -69,3 +69,6 @@ Log.d("==>","Will display internal web page");
 return true;
 }
 ```
+
+![external(AOE2)](external.png) 
+![internal(DOTA2)](internal.png) 
