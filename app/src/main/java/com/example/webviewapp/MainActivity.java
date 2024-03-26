@@ -8,14 +8,19 @@ import android.view.MenuItem;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+
 public class MainActivity extends AppCompatActivity {
 
+    private WebView myWebView;
+    private WebViewClient myWebViewClient;
     public void showExternalWebPage(){
-        // TODO: Add your code for showing external web page here
+        myWebView.loadUrl("https://liquipedia.net/ageofempires/");
     }
 
     public void showInternalWebPage(){
-        // TODO: Add your code for showing internal web page here
+        myWebView.loadUrl("https://liquipedia.net/dota2");
     }
 
     @Override
@@ -24,6 +29,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        myWebView = findViewById(R.id.my_webView);
+        myWebView.getSettings().setJavaScriptEnabled(true);
+        myWebViewClient = new WebViewClient();
+        myWebView.setWebViewClient(myWebViewClient);
+
+        myWebView.loadUrl("https://liquipedia.net/");
+
 
         /*
         * Rename your App. Tip: Values->Strings
@@ -67,11 +80,13 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_external_web) {
+            showExternalWebPage();
             Log.d("==>","Will display external web page");
             return true;
         }
 
         if (id == R.id.action_internal_web) {
+            showInternalWebPage();
             Log.d("==>","Will display internal web page");
             return true;
         }
