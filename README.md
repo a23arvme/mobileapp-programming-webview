@@ -1,42 +1,71 @@
 
-# Rapport
+# Report
 
-**Skriv din rapport här!**
+1. renamed application name to "Liquipedia!" in strings.xml
+2. enabled internet access by adding a new xml tag in AndroidManifest.xml
+3. created a new webview by replacing TextView tag
+    - added id "my_webview"
+4. created member var in MainActivity for the webview
+    - set it to the webview using the built-in find method
+    - enabled js
+5. Created a member var for the webview client.
+    - set the webview to include the client
+6. set initial page
+7. added the internal and external urls 
+8. call the methods inside the dropdown menu
 
-_Du kan ta bort all text som finns sedan tidigare_.
+## Code 
 
-## Följande grundsyn gäller dugga-svar:
-
-- Ett kortfattat svar är att föredra. Svar som är längre än en sida text (skärmdumpar och programkod exkluderat) är onödigt långt.
-- Svaret skall ha minst en snutt programkod.
-- Svaret skall inkludera en kort övergripande förklarande text som redogör för vad respektive snutt programkod gör eller som svarar på annan teorifråga.
-- Svaret skall ha minst en skärmdump. Skärmdumpar skall illustrera exekvering av relevant programkod. Eventuell text i skärmdumpar måste vara läsbar.
-- I de fall detta efterfrågas, dela upp delar av ditt svar i för- och nackdelar. Dina för- respektive nackdelar skall vara i form av punktlistor med kortare stycken (3-4 meningar).
-
-Programkod ska se ut som exemplet nedan. Koden måste vara korrekt indenterad då den blir lättare att läsa vilket gör det lättare att hitta syntaktiska fel.
+### strings.xml
+``` xml
+<resources>
+    <string name="app_name">Liquipedia!</string>
+    <string name="action_external_web">AOE2</string>
+    <string name="action_internal_web">DOTA2</string>
+</resources>
 
 ```
-function errorCallback(error) {
-    switch(error.code) {
-        case error.PERMISSION_DENIED:
-            // Geolocation API stöds inte, gör något
-            break;
-        case error.POSITION_UNAVAILABLE:
-            // Misslyckat positionsanrop, gör något
-            break;
-        case error.UNKNOWN_ERROR:
-            // Okänt fel, gör något
-            break;
-    }
+
+
+### MainActivity
+
+#### fields
+``` java
+    private WebView myWebView;
+    private WebViewClient myWebViewClient;
+```
+
+
+#### methods
+``` java
+public void showExternalWebPage(){
+myWebView.loadUrl("https://liquipedia.net/ageofempires/");
+}
+
+public void showInternalWebPage(){
+myWebView.loadUrl("https://liquipedia.net/dota2");
 }
 ```
 
-Bilder läggs i samma mapp som markdown-filen.
+#### onCreate()
+``` java
+myWebView = findViewById(R.id.my_webView);          // find id
+myWebViewClient = new WebViewClient();              // init client
+myWebView.setWebViewClient(myWebViewClient);        //  set client on webview
+myWebView.getSettings().setJavaScriptEnabled(true); // enable js
+myWebView.loadUrl("https://liquipedia.net/");       // initial page
+```
+#### dropdown menu
+``` java
+if (id == R.id.action_external_web) {
+showExternalWebPage();
+Log.d("==>","Will display external web page");
+return true;
+}
 
-![](android.png)
-
-Läs gärna:
-
-- Boulos, M.N.K., Warren, J., Gong, J. & Yue, P. (2010) Web GIS in practice VIII: HTML5 and the canvas element for interactive online mapping. International journal of health geographics 9, 14. Shin, Y. &
-- Wunsche, B.C. (2013) A smartphone-based golf simulation exercise game for supporting arthritis patients. 2013 28th International Conference of Image and Vision Computing New Zealand (IVCNZ), IEEE, pp. 459–464.
-- Wohlin, C., Runeson, P., Höst, M., Ohlsson, M.C., Regnell, B., Wesslén, A. (2012) Experimentation in Software Engineering, Berlin, Heidelberg: Springer Berlin Heidelberg.
+if (id == R.id.action_internal_web) {
+showInternalWebPage();
+Log.d("==>","Will display internal web page");
+return true;
+}
+```
